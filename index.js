@@ -20,15 +20,15 @@ app.get('/randombook', (req, res) => {
     res.json(books.books[Math.floor(Math.random()*books.books.length)])
 })
 
+/* returns a random book */
+app.get('/random', (req, res) => {
+    res.json(books_with_images.results[Math.floor(Math.random()*books_with_images.results.length)]);
+})
+
 /* returns the first X books without the images  */
 app.get('/:num', (req, res) => {
     const num = req.params.num;
     res.json(books.books.slice(0, num))
-})
-
-/* returns a random book */
-app.get('/random', (req, res) => {
-    res.json(books_with_images.results[Math.floor(Math.random()*books_with_images.results.length)]);
 })
 
 /* returns random books of given number */
