@@ -38,8 +38,13 @@ app.get('/bookinfo/exact/:title', (req, res) => {
     let title = req.params.title;
 
     for (const book of books.results) {
+        /*
         if (book.title.toLowerCase() === title.toLowerCase()) { // eval: "['Horror']" => ['Horror']
             return res.json(book); // returns only an object
+        }
+        */
+        if (book.title.toLowerCase().includes(title.toLowerCase())) { // eval: "['Horror']" => ['Horror']
+            return res.json(book); // returns only an object // returns the first match
         }
     }
 
@@ -52,6 +57,36 @@ app.get('/bestbooks', (req, res) => {
     books.results = books.results.sort((a, b) => (a.rating > b.rating) ? -1 : 1);
 
     res.json(books.results);
+})
+
+/* returns the languages that can be chosed */
+app.get('/languages', (req, res) => {
+
+    const languages = [];
+
+    for (const book of books.results) {
+        if (!languages.includes(book.language) && book.language !== "") {
+            languages.push(book.language);
+        }
+    }
+
+    res.json(languages); // returns a list of strings
+})
+
+/* returns the genres that can be chosed */
+app.get('/genres', (req, res) => {
+
+    const genres = [];
+
+    for (const book of books.results) {
+        for (const genre of eval(book.genres)) {
+            if (!genres.includes(genre) && genre !== "") {
+                genres.push(genre);
+            }
+        }
+    }
+
+    res.json(genres); // returns a list of strings
 })
 
 /* returns the top X best books */
@@ -210,6 +245,21 @@ app.get('/price/:price', (req, res) => {
     }
 
     res.json(searchedBooks); // returns a list of objects
+})
+
+/* returns a random book of given language */
+app.get('/language/:language/random', (req, res) => {
+    let language = req.params.language;
+
+    const booksOfLanguage = [];
+
+    for (const book of books.results) {
+        if (book.language.toLowerCase().includes(language.toLowerCase())) {
+            booksOfLanguage.push(book);
+        }
+    }
+
+    res.json(booksOfLanguage[Math.floor(Math.random()*booksOfLanguage.length)]); // returns an object
 })
 
 /* returns books of given language */
