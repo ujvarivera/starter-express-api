@@ -153,6 +153,10 @@ app.get('/genre/:genre/random', (req, res) => {
         }
     }
 
+    if (booksInGenre.length === 0) {
+        return res.json({});
+    }
+
     res.json(booksInGenre[Math.floor(Math.random()*booksInGenre.length)]); //returns an object
 })
 
@@ -257,6 +261,10 @@ app.get('/language/:language/random', (req, res) => {
         if (book.language.toLowerCase().includes(language.toLowerCase())) {
             booksOfLanguage.push(book);
         }
+    }
+
+    if (booksOfLanguage.length === 0) {
+        return res.json({});
     }
 
     res.json(booksOfLanguage[Math.floor(Math.random()*booksOfLanguage.length)]); // returns an object
