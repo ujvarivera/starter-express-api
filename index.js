@@ -235,6 +235,25 @@ app.get('/pages/:num', (req, res) => {
     res.json(searchedBooks); // returns a list of objects
 })
 
+/* returns a random book which have less than :num pages */
+app.get('/pages/:num/random', (req, res) => {
+    let num = req.params.num;
+
+    const searchedBooks = [];
+
+    for (const book of books.results) {
+        if (book.pages != "" && book.pages <= num && typeof book.pages !== 'string') {
+            searchedBooks.push(book);
+        }
+    }
+
+    if(searchedBooks.length === 0) {
+        return res.json({});
+    }
+
+    res.json(searchedBooks[Math.floor(Math.random()*searchedBooks.length)]); // returns an object
+})
+
 /* returns the books which cost less than :price */
 app.get('/price/:price', (req, res) => {
     let price = req.params.price;
@@ -249,6 +268,25 @@ app.get('/price/:price', (req, res) => {
     }
 
     res.json(searchedBooks); // returns a list of objects
+})
+
+/* returns a random book which cost less than :price */
+app.get('/price/:price/random', (req, res) => {
+    let price = req.params.price;
+
+    const searchedBooks = [];
+
+    for (const book of books.results) {
+        if (book.price != "" && book.price <= price) {
+            searchedBooks.push(book);
+        }
+    }
+
+    if(searchedBooks.length === 0) {
+        return res.json({});
+    }
+
+    res.json(searchedBooks[Math.floor(Math.random()*searchedBooks.length)]); // returns an object
 })
 
 /* returns a random book of given language */
