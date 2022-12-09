@@ -1,11 +1,13 @@
 import { books } from './bestBooks.js'
 import express from 'express'
+import cors from 'cors'
 
 const app = express()
 
 app.use((err, req, res, next) => {
     res.status(500).json({ message: err })
 })
+app.use(cors());
 
 /* returns a random book */
 app.get('/random', (req, res) => {
