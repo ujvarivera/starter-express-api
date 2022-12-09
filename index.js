@@ -72,7 +72,7 @@ app.get('/languages', (req, res) => {
         }
     }
 
-    res.json(languages); // returns a list of strings
+    res.json(languages.sort()); // returns a list of strings
 })
 
 /* returns the genres that can be chosed */
@@ -88,7 +88,7 @@ app.get('/genres', (req, res) => {
         }
     }
 
-    res.json(genres); // returns a list of strings
+    res.json(genres.sort()); // returns a list of strings
 })
 
 /* returns the top X best books */
